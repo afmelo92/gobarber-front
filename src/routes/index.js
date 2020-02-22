@@ -11,10 +11,12 @@ import Default from '../pages/Default';
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/" exact component={SignUp} />
+      <Route path="/" exact component={SignIn} />
+      <Route path="/register" component={SignUp} />
+
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/profile" component={Profile} isPrivate />
-      <Route path="/register" component={SignIn} />
+
       <Route path="/" component={Default} />
     </Switch>
   );
