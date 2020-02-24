@@ -1,14 +1,20 @@
 import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
 import Input from '~/components/Input';
+import { signInRequest } from '~/store/modules/auth/actions';
+
 import logo from '~/assets/logo.svg';
 
 export default function SignIn() {
   const formRef = useRef(null);
-  async function handleSubmit(data) {
+  const dispatch = useDispatch();
+
+  async function handleSubmit({ email, password }) {
+    dispatch(signInRequest(email, password));
     try {
       // Remove all previous errors
 
@@ -21,13 +27,16 @@ export default function SignIn() {
         password: Yup.string().required('A senha é obrigatória'),
       });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+      await schema.validate(
+        { email, password },
+        {
+          abortEarly: false,
+        }
+      );
 
       // Validation passed
 
-      console.tron.log(data);
+      console.tron.log({ email, password });
     } catch (err) {
       const validationErrors = {};
 
