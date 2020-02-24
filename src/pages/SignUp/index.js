@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -6,10 +7,15 @@ import * as Yup from 'yup';
 import Input from '~/components/Input';
 import logo from '~/assets/logo.svg';
 
+import { signUpRequest } from '~/store/modules/auth/actions';
+
 export default function SignUp() {
   const formRef = useRef(null);
-  async function handleSubmit(data) {
+  const dispatch = useDispatch();
+
+  async function handleSubmit({ name, email, password }) {
     try {
+      dispatch(signUpRequest(name, email, password));
       // Remove all previous errors
 
       formRef.current.setErrors({});
@@ -24,13 +30,14 @@ export default function SignUp() {
           .required('A senha é obrigatória'),
       });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+      await schema.validate(
+        { name, email, password },
+        {
+          abortEarly: false,
+        }
+      );
 
       // Validation passed
-
-      console.tron.log(data);
     } catch (err) {
       const validationErrors = {};
 
