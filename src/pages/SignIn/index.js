@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -12,6 +12,7 @@ import logo from '~/assets/logo.svg';
 export default function SignIn() {
   const formRef = useRef(null);
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
 
   async function handleSubmit({ email, password }) {
     dispatch(signInRequest(email, password));
@@ -63,7 +64,7 @@ export default function SignIn() {
           placeholder="Sua senha secreta"
         />
 
-        <button type="submit">Acessar</button>
+        <button type="submit">{loading ? 'Carregando...' : 'Acessar'}</button>
         <Link to="/register">Criar conta gratuita</Link>
       </Form>
     </>
