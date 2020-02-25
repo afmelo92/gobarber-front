@@ -4,6 +4,7 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
 import Input from '~/components/Input';
+import AvatarInput from './AvatarInput';
 
 import { updateProfileRequest } from '~/store/modules/user/actions';
 
@@ -20,8 +21,16 @@ export default function Profile() {
     password,
     oldPassword,
     confirmPassword,
+    avatar_id,
   }) {
-    const data = { name, email, password, oldPassword, confirmPassword };
+    const data = {
+      name,
+      email,
+      password,
+      oldPassword,
+      confirmPassword,
+      avatar_id,
+    };
     dispatch(updateProfileRequest(data));
     try {
       formRef.current.setErrors({});
@@ -32,6 +41,7 @@ export default function Profile() {
         password: Yup.string(),
         oldPassword: Yup.string(),
         confirmPassword: Yup.string(),
+        avatar_id: Yup.number(),
       });
 
       await schema.validate(
@@ -41,6 +51,7 @@ export default function Profile() {
           password,
           oldPassword,
           confirmPassword,
+          avatar_id,
         },
         {
           abortEarly: false,
@@ -62,6 +73,7 @@ export default function Profile() {
   return (
     <Container>
       <Form initialData={profile} ref={formRef} onSubmit={handleSubmit}>
+        <AvatarInput name="avatar_id" />
         <Input name="name" placeholder="Nome completo" />
         <Input name="email" type="email" placeholder="Seu e-mail" />
 
