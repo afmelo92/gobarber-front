@@ -1,16 +1,21 @@
 import React, { useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '@unform/web';
 
 import Input from '~/components/Input';
+
+import { updateProfileRequest } from '~/store/modules/user/actions';
 
 import { Container } from './styles';
 
 export default function Profile() {
   const formRef = useRef(null);
   const profile = useSelector(state => state.user.profile);
+  const dispatch = useDispatch();
 
-  function handleSubmit(data) {}
+  function handleSubmit(data) {
+    dispatch(updateProfileRequest(data));
+  }
 
   return (
     <Container>
