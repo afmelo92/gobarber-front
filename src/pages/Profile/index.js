@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Input from '~/components/Input';
 import AvatarInput from './AvatarInput';
 
+import { signOut } from '~/store/modules/auth/actions';
 import { updateProfileRequest } from '~/store/modules/user/actions';
 
 import { Container } from './styles';
@@ -70,6 +71,10 @@ export default function Profile() {
     }
   }
 
+  function handleSignOut() {
+    dispatch(signOut());
+  }
+
   return (
     <Container>
       <Form initialData={profile} ref={formRef} onSubmit={handleSubmit}>
@@ -93,7 +98,9 @@ export default function Profile() {
 
         <button type="submit">Atualizar perfil</button>
       </Form>
-      <button type="button">Sair do GoBarber</button>
+      <button type="button" onClick={handleSignOut}>
+        Sair do GoBarber
+      </button>
     </Container>
   );
 }
